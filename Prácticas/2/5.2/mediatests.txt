@@ -1,0 +1,8 @@
+T#1suma = 16 = 0x10 hex
+T#2suma = 4294967280 = 0xfffffff0 hex
+T#3suma = 4294967296 = 0x100000000 hex
+T#4suma = 68719476720 = 0xffffffff0 hex
+T#5suma = 68719476720 = 0xffffffff0 hex
+T#6suma = 3200000000 = 0xbebc2000 hex
+T#7suma = 4800000000 = 0x11e1a3000 hex
+T#8suma = 11280523264 = 0x2a05f2000 hex

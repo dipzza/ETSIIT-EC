@@ -1,0 +1,152 @@
+T#1	 32bits
+ 	 media 	 =          1 	 resto 	 =          8
+		 = 0x00000001 		 = 0x00000008 
+
+	 64bits
+ 	 media 	 =          1 	 resto 	 =          8
+		 = 0x00000001 		 = 0x00000008 
+
+T#2	 32bits
+ 	 media 	 =         -1 	 resto 	 =         -8
+		 = 0xffffffff 		 = 0xfffffff8 
+
+	 64bits
+ 	 media 	 =         -1 	 resto 	 =         -8
+		 = 0xffffffff 		 = 0xfffffff8 
+
+T#3	 32bits
+ 	 media 	 =         -1 	 resto 	 =          0
+		 = 0xffffffff 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 =         -1 	 resto 	 =          0
+		 = 0xffffffff 		 = 0x00000000 
+
+T#4	 32bits
+ 	 media 	 = -2147483648 	 resto 	 =          0
+		 = 0x80000000 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 = -2147483648 	 resto 	 =          0
+		 = 0x80000000 		 = 0x00000000 
+
+T#5	 32bits
+ 	 media 	 =         -1 	 resto 	 =          0
+		 = 0xffffffff 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 =         -1 	 resto 	 =          0
+		 = 0xffffffff 		 = 0x00000000 
+
+T#6	 32bits
+ 	 media 	 = 2000000000 	 resto 	 =          0
+		 = 0x77359400 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 = 2000000000 	 resto 	 =          0
+		 = 0x77359400 		 = 0x00000000 
+
+T#7	 32bits
+ 	 media 	 = -1294967296 	 resto 	 =          0
+		 = 0xb2d05e00 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 = -1294967296 	 resto 	 =          0
+		 = 0xb2d05e00 		 = 0x00000000 
+
+T#8	 32bits
+ 	 media 	 = -2000000000 	 resto 	 =          0
+		 = 0x88ca6c00 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 = -2000000000 	 resto 	 =          0
+		 = 0x88ca6c00 		 = 0x00000000 
+
+T#9	 32bits
+ 	 media 	 = 1294967296 	 resto 	 =          0
+		 = 0x4d2fa200 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 = 1294967296 	 resto 	 =          0
+		 = 0x4d2fa200 		 = 0x00000000 
+
+T#10	 32bits
+ 	 media 	 =          1 	 resto 	 =          0
+		 = 0x00000001 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 =          1 	 resto 	 =          0
+		 = 0x00000001 		 = 0x00000000 
+
+T#11	 32bits
+ 	 media 	 =          1 	 resto 	 =          1
+		 = 0x00000001 		 = 0x00000001 
+
+	 64bits
+ 	 media 	 =          1 	 resto 	 =          1
+		 = 0x00000001 		 = 0x00000001 
+
+T#12	 32bits
+ 	 media 	 =          1 	 resto 	 =          8
+		 = 0x00000001 		 = 0x00000008 
+
+	 64bits
+ 	 media 	 =          1 	 resto 	 =          8
+		 = 0x00000001 		 = 0x00000008 
+
+T#13	 32bits
+ 	 media 	 =          1 	 resto 	 =         15
+		 = 0x00000001 		 = 0x0000000f 
+
+	 64bits
+ 	 media 	 =          1 	 resto 	 =         15
+		 = 0x00000001 		 = 0x0000000f 
+
+T#14	 32bits
+ 	 media 	 =          2 	 resto 	 =          0
+		 = 0x00000002 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 =          2 	 resto 	 =          0
+		 = 0x00000002 		 = 0x00000000 
+
+T#15	 32bits
+ 	 media 	 =         -1 	 resto 	 =          0
+		 = 0xffffffff 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 =         -1 	 resto 	 =          0
+		 = 0xffffffff 		 = 0x00000000 
+
+T#16	 32bits
+ 	 media 	 =         -1 	 resto 	 =         -1
+		 = 0xffffffff 		 = 0xffffffff 
+
+	 64bits
+ 	 media 	 =         -1 	 resto 	 =         -1
+		 = 0xffffffff 		 = 0xffffffff 
+
+T#17	 32bits
+ 	 media 	 =         -1 	 resto 	 =         -8
+		 = 0xffffffff 		 = 0xfffffff8 
+
+	 64bits
+ 	 media 	 =         -1 	 resto 	 =         -8
+		 = 0xffffffff 		 = 0xfffffff8 
+
+T#18	 32bits
+ 	 media 	 =         -1 	 resto 	 =        -15
+		 = 0xffffffff 		 = 0xfffffff1 
+
+	 64bits
+ 	 media 	 =         -1 	 resto 	 =        -15
+		 = 0xffffffff 		 = 0xfffffff1 
+
+T#19	 32bits
+ 	 media 	 =         -2 	 resto 	 =          0
+		 = 0xfffffffe 		 = 0x00000000 
+
+	 64bits
+ 	 media 	 =         -2 	 resto 	 =          0
+		 = 0xfffffffe 		 = 0x00000000 
+

@@ -1,0 +1,117 @@
+#Autor: Francisco Javier Bolívar Expósito
+
+Contraseña Original: "aaabbbaaa\n"
+PIN        Original: 1234
+
+Contraseña Modificada: "abcdefghi\n"
+PIN        Modficado : 4096
+
+¿Como se pueden encontrar las contraseñas?
+Cargamos el programa en gdb con file bomba, layout asm y layout reg.
+
+Contraseña:
+
+Instrucciones relevantes:
+    0x40128a <main+92>      lea    -0x70(%rbp),%rax                                                                                 
+    0x40128e <main+96>      mov    %rax,%rdi
+    0x401291 <main+99>      callq  0x4011ca <caesarROT1>                                                                            
+    0x401296 <main+104>     lea    -0x70(%rbp),%rax                                                                                 
+    0x40129a <main+108>     mov    $0xb,%edx 
+    0x40129f <main+113>     lea    0x2dc2(%rip),%rsi        # 0x404068 <password>
+    0x4012a6 <main+120>     mov    %rax,%rdi
+    0x4012a9 <main+123>     callq  0x401030 <strncmp@plt>
+    0x4012ae <main+128>     test   %eax,%eax
+    0x4012b0 <main+130>     je     0x4012b7 <main+137>
+    0x4012b2 <main+132>     callq  0x401196 <boom>
+
+Primero buscamos donde está la comprobación de la contraseña, para esto podemos dejar que se ejecute el programa con run e introducimos cualquier contraseña, por ejemplo "aaaa\n". Al llegar a la llamada a bomba vemos que condición ha pasado antes para que se ejecute y vemos:
+
+    0x4012a9 <main+123>     callq  0x401030 <strncmp@plt>
+    0x4012ae <main+128>     test   %eax,%eax
+    0x4012b0 <main+130>     je     0x4012b7 <main+137>
+
+El resultado de las llamadas se devuelve en eax, que valdra 0 si las 2 cadenas que compara strncmp son iguales.
+Se hace test %eax, %eax para activar el ZF si %eax vale 0 y si se activa la instrucción je se saltará la bomba.
+
+Vamos a ver el valor de las cadenas que se han comparado en strncmp, los 3 primeros argumentos en una llamada se pasan en %rdi, %rsi y %rdx. Estos se han pasado en las instrucciónes anteriores a la llamada:
+
+    0x401296 <main+104>     lea    -0x70(%rbp),%rax
+    0x40129a <main+108>     mov    $0xb,%edx
+    0x40129f <main+113>     lea    0x2dc2(%rip),%rsi        # 0x404068 <password>
+    0x4012a6 <main+120>     mov    %rax,%rdi
+
+Hacemos br *main+123, run y comprobamos el valor de los registros que podemos ver al haber hecho layout reg.
+
+En %rax y en %rsi tenemos direcciones de memorias y en %rdx un 11 que es la longitud que tiene que tener la cadena.
+Si examinamos las direcciones con x/11c 0x7fffffffdd00 y x/11c 0x404068 obtenemos las 2 cadenas que está comparando:
+"bbbb\n" y una variable llamada 'password' que contiene: "bbbcccbbb\n"
+
+¿Pero donde está nuestra cadena "aaaa\n" que hemos introducido? La variable 'password' contiene: "bbbcccbbb\n" desde que comienza el programa, así que vamos a fijarnos en como ha ido cambiando el valor de la 1a cadena que se compara.
+
+Las instrucciones para pasar esta cadena a la función 'strncmp' son:
+    lea -0x70(%rbp),%rax
+    mov %rax, %rdi
+
+3 líneas encima empezando podemos ver exactamente las mismas instrucciones pero esta vez la cadena se pasa a una función llamada 'caesarROT1':
+
+    0x40128a <main+92>      lea    -0x70(%rbp),%rax                                                                                 
+    0x40128e <main+96>      mov    %rax,%rdi
+    0x401291 <main+99>      callq  0x4011ca <caesarROT1>
+
+Con el nombre ya podemos suponer lo que hace, un Caesar CypherROT1 cambia cada letra de una cadena por la siguiente en el abecedario. Examinando la cadena antes de la llamada esta vale "aaaa\n", lo que introducimos nosotros, y después de la llamada vale "bbbb\n", las letras cambiadas por una más en el abecedario. Así resolvemos el misterio de que le había pasado a la contraseña que habíamos introducido.
+
+Si no sabemos que significa caesarROT1, no buscamos por internet y no nos damos cuenta de como cambia la cadena también podríamos ver que hace la función entrando con stepi y ver como le va sumando a cada letra un 1.
+
+Si a lo que introduzcamos se le va a sumar una posición en el abecedario y se va a comparar con "bbbcccbbb\n" la
+solución correcta es "aaabbbaaa\n"
+
+
+PIN:
+
+Instrucciones relevantes:
+    0x401339 <main+267>     mov    -0x98(%rbp),%eax 
+    0x40133f <main+273>     add    $0x4,%eax
+    0x401342 <main+276>     mov    %eax,-0x98(%rbp)
+    0x401348 <main+282>     mov    -0x98(%rbp),%edx
+    0x40134e <main+288>     mov    0x2d20(%rip),%eax        # 0x404074 <passcode>
+    0x401354 <main+294>     cmp    %eax,%edx
+    0x401356 <main+296>     je     0x40135d <main+303>
+    0x401358 <main+298>     callq  0x401196 <boom> 
+
+Hacemos lo mismo que antes para llegar a la bomba y ponemos de pin 1000. Si vemos el valor de los registros en la
+instrucción cmp %eax, %edx y como se han pasado vemos que tenemos una variable 'passcode'=1238 y un número 1004 al
+interpretarlos como unsigned decimal.
+
+Al igual que antes el valor que hemos introducido (1000) no está, pero está vez simplemente viendo las 3 instrucciones anteriores al paso de argumentos:
+
+    0x401339 <main+267>     mov    -0x98(%rbp),%eax 
+    0x40133f <main+273>     add    $0x4,%eax
+    0x401342 <main+276>     mov    %eax,-0x98(%rbp)
+    
+Vemos que se le suma 4 al valor que introduzcamos. Por lo tanto para conseguir que al final sea 1238 el pin a introducir es 1234.
+
+
+
+¿Como se modifican las contraseñas?
+
+Tendremos que cambiar el valor teniendo en cuenta las transformaciones que se le hacen a las entradas.
+
+Contraseña Modificada: "abcdefghi\n"    Valor a guardar en 0x404068 <password>: "bcdefghij\n"
+PIN        Modficado : 4096             Valor a guardar en 0x404074 <passcode>: 4100
+
+Pasos para modificar:
+    
+    set write on
+    file bomba
+    
+# comprobar direcciones a cambiar
+    x/11c 0x404068
+    x/h   0x404074
+    
+# realizar los cambios
+    set {char[11]}0x404068="bcdefghij\n"
+    set {int}0x404074=4100
+    
+# comprobar cambios
+    x/11c 0x404068
+    x/h   0x404074
